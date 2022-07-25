@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Header from "./HeaderComponent";
 import NameForm from "./NameFormComponent";
 import IngredientForm from "./IngredientFormComponent";
-
+import DirectionForm from "./DirectionFormComponent";
 
 export default function NewRecipe() {
     const [reqBody, setReqBody] = useState({
@@ -37,17 +37,22 @@ export default function NewRecipe() {
             }
         } else if (event.target.name === 'ingredients') {
             const newIngredients = [...reqBody.ingredients];
-            console.log(`newIngredients: ${newIngredients}`)
-
             newIngredients[event.target.id] = event.target.value;
-            console.log(`i: ${event.target.id}, value: ${event.target.value}`)
-
             setReqBody(prevState => {
                 return {
                     ...prevState,
                     ingredients: newIngredients
                 }
-            })
+            });
+        } else if (event.target.name === 'directions') {
+            const newDirections = [...reqBody.directions];
+            newDirections[event.target.id] = event.target.value;
+            setReqBody(prevState => {
+                return {
+                    ...prevState,
+                    directions: newDirections
+                }
+            });
         }
     }
 
@@ -84,7 +89,13 @@ export default function NewRecipe() {
                         reqBody={reqBody}
                         errors={errors}
                     />
-                    <IngredientForm 
+                    <IngredientForm
+                        handleFieldChange={handleFieldChange}
+                        reqBody={reqBody}
+                        setReqBody={setReqBody}
+                        errors={errors}
+                    />
+                    <DirectionForm
                         handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
                         setReqBody={setReqBody}
