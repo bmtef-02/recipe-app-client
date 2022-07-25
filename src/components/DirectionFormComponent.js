@@ -6,6 +6,10 @@ const styles = {
     direction: {
         fontSize: '25px',
         marginBottom: '50px',
+    },
+    feedback: {
+        fontSize: '12px',
+        marginTop: '0px',
     }
 }
 
@@ -31,6 +35,9 @@ const Direction = (props) => {
                     name='directions'
                     value={direction}
                 />
+                <Form.Control.Feedback type='invalid' style={styles.feedback}>
+                    {errors.directions[i]}
+                </Form.Control.Feedback>
             </Col>
         </React.Fragment>
     );

@@ -6,6 +6,10 @@ const styles = {
     ingredient: {
         fontSize: '25px',
         marginBottom: '50px',
+    },
+    feedback: {
+        fontSize: '12px',
+        marginTop: '0px',
     }
 }
 
@@ -31,6 +35,9 @@ const Ingredient = (props) => {
                     name='ingredients'
                     value={ingredient}
                 />
+                <Form.Control.Feedback type='invalid' style={styles.feedback}>
+                    {errors.ingredients[i]}
+                </Form.Control.Feedback>
             </Col>
         </React.Fragment>
     );

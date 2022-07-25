@@ -27,14 +27,14 @@ export default function NewRecipe() {
             setReqBody({
                 ...reqBody,
                 [event.target.name]: event.target.value
-            })
+            });
             
             if (!!errors.name) {
                 setErrors({
                     ...errors,
                     name: null
                 })
-            }
+            };
         } else if (event.target.name === 'ingredients') {
             const newIngredients = [...reqBody.ingredients];
             newIngredients[event.target.id] = event.target.value;
@@ -44,6 +44,10 @@ export default function NewRecipe() {
                     ingredients: newIngredients
                 }
             });
+
+            // if (!!errors.ingredients[event.target.id]) {
+            //     const newIngredientErrors = [...errors.ingredients];
+            // }
         } else if (event.target.name === 'directions') {
             const newDirections = [...reqBody.directions];
             newDirections[event.target.id] = event.target.value;
@@ -60,7 +64,7 @@ export default function NewRecipe() {
         event.preventDefault();
         const newErrors = findFormErrors();
         
-        if (newErrors.name) {
+        if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '')) {
             setErrors(newErrors);
         } else {
             alert("no errors");
@@ -69,12 +73,32 @@ export default function NewRecipe() {
 
     const findFormErrors = () => {
         const newErrors = {};
+        const ingredientsErrors = [];
+        const directionsErrors = [];
 
         if (!reqBody.name) {
             newErrors.name = 'recipe name cannot be blank';
         } else if (reqBody.name.length > 10) {
             newErrors.name = 'recipe name must be less than 30 characters';
-        }
+        };
+
+        {reqBody.ingredients.forEach((ingredient) => {
+            if (ingredient === '' || !ingredient) {
+                ingredientsErrors.push('ingredient cannot be blank');
+            } else {
+                ingredientsErrors.push('');
+            }
+        })};
+        newErrors.ingredients = ingredientsErrors;
+
+        {reqBody.directions.forEach((direction) => {
+            if (direction === '' || !direction) {
+                directionsErrors.push('direction cannot be blank');
+            } else {
+                directionsErrors.push('');
+            }
+        })};
+        newErrors.directions = directionsErrors;
 
         return newErrors;
     }
