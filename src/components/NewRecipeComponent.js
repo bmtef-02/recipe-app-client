@@ -15,7 +15,7 @@ export default function NewRecipe() {
     });
     const [errors, setErrors] = useState({
         name: '',
-        ingredients: ['', ''],
+        ingredients: ['', '', ''],
         directions: ['', ''],
         notes: ''
     });
@@ -82,7 +82,7 @@ export default function NewRecipe() {
             newErrors.name = 'recipe name must be less than 30 characters';
         };
 
-        {reqBody.ingredients.forEach((ingredient) => {
+        {reqBody.ingredients.forEach((ingredient, i) => {
             if (ingredient === '' || !ingredient) {
                 ingredientsErrors.push('ingredient cannot be blank');
             } else {

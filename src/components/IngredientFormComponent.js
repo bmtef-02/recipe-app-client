@@ -46,7 +46,6 @@ const Ingredient = (props) => {
 const AddButton = (props) => {
     const {
         ingredients,
-        ingredient,
         setReqBody,
         i,
     } = props
@@ -78,7 +77,6 @@ const AddButton = (props) => {
 const RemoveButton = (props) => {
     const {
         ingredients,
-        ingredient,
         setReqBody,
         i,
     } = props;
@@ -131,14 +129,12 @@ export default function IngredientForm(props) {
                         />
                         <AddButton 
                             ingredients={reqBody.ingredients}
-                            ingredient={ingredient}
                             setReqBody={setReqBody}
                             i={i}
                             key={`add ${ingredient}`}
                         />
                         <RemoveButton 
                             ingredients={reqBody.ingredients}
-                            ingredient={ingredient}
                             setReqBody={setReqBody}
                             i={i}
                             key={`remove ${ingredient}`}
@@ -146,6 +142,11 @@ export default function IngredientForm(props) {
                     </Row>
                 </Form.Group>
             ))}
+            <AddButton
+                ingredients={reqBody.ingredients}
+                setReqBody={setReqBody}
+                i={reqBody.ingredients.length}
+            />
         </Row>
     );
 }

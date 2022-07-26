@@ -46,7 +46,6 @@ const Direction = (props) => {
 const AddButton = (props) => {
     const {
         directions,
-        direction,
         setReqBody,
         i,
     } = props
@@ -78,7 +77,6 @@ const AddButton = (props) => {
 const RemoveButton = (props) => {
     const {
         directions,
-        direction,
         setReqBody,
         i,
     } = props;
@@ -131,14 +129,12 @@ export default function DirectionForm(props) {
                         />
                         <AddButton 
                             directions={reqBody.directions}
-                            direction={direction}
                             setReqBody={setReqBody}
                             i={i}
                             key={`add ${direction}`}
                         />
                         <RemoveButton 
                             directions={reqBody.directions}
-                            direction={direction}
                             setReqBody={setReqBody}
                             i={i}
                             key={`remove ${direction}`}
@@ -146,6 +142,11 @@ export default function DirectionForm(props) {
                     </Row>
                 </Form.Group>
             ))}
+            <AddButton
+                directions={reqBody.directions}
+                setReqBody={setReqBody}
+                i={reqBody.directions.length}
+            />
         </Row>
     );
 }
