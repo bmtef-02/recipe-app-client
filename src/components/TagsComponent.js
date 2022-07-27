@@ -15,7 +15,13 @@ const styles = {
     }
 }
 
-export default function Tags() {
+export default function Tags(props) {
+
+    const {
+        handleFieldChange,
+        reqBody,
+        setReqBody,
+    } = props; 
 
     return (
         <Row style={styles.tags}>
@@ -38,21 +44,22 @@ export default function Tags() {
                     /> */}
                     <Autocomplete
                         multiple
-                        id="tags-filled"
                         options={foodTags.map((option) => option)}
                         freeSolo
                         renderTags={(value, getTagProps) =>
                             value.map((option, index) => (
-                                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                                <Chip variant='filled' label={option} {...getTagProps({ index })} />
                             ))
                         }
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="select, search, or create a tag"
-                                placeholder="tags"
+                                label='select, search, or create a tag'
+                                placeholder='tags'
+                                name='tags'                               
                             />
                         )}
+                        onChange={handleFieldChange}
                     />
                 </Col>
             </Form.Group>

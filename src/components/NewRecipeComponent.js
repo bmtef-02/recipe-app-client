@@ -23,7 +23,7 @@ export default function NewRecipe() {
     const [tagError, setTagError] = useState(false);
     const [openModal, setModalOpen] = useState(false);
 
-    const handleFieldChange = (event) => {
+    const handleFieldChange = (event, value) => {
         if (event.target.name === 'name') {
             setReqBody({
                 ...reqBody,
@@ -58,6 +58,11 @@ export default function NewRecipe() {
                     directions: newDirections
                 }
             });
+        } else if (Array.isArray(value)) {
+            setReqBody({
+                ...reqBody,
+                'tags': value
+            })
         }
     }
 
@@ -126,7 +131,11 @@ export default function NewRecipe() {
                         setReqBody={setReqBody}
                         errors={errors}
                     />
-                    <Tags />
+                    <Tags
+                        handleFieldChange={handleFieldChange}
+                        reqBody={reqBody}
+                        setReqBody={setReqBody}
+                    />
                     <Row className="mb-5">
                         <Col xs="auto">
                             <Button type="submit" variant="outline-dark" size="lg">save me!</Button>
