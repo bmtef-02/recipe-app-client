@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import Header from "./HeaderComponent";
-import NameForm from "./NameFormComponent";
-import IngredientForm from "./IngredientFormComponent";
-import DirectionForm from "./DirectionFormComponent";
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import Header from './HeaderComponent';
+import NameForm from './NameFormComponent';
+import IngredientForm from './IngredientFormComponent';
+import DirectionForm from './DirectionFormComponent';
+import Tags from './TagsComponent';
 
 export default function NewRecipe() {
     const [reqBody, setReqBody] = useState({
@@ -125,6 +126,7 @@ export default function NewRecipe() {
                         setReqBody={setReqBody}
                         errors={errors}
                     />
+                    <Tags />
                     <Row className="mb-5">
                         <Col xs="auto">
                             <Button type="submit" variant="outline-dark" size="lg">save me!</Button>
