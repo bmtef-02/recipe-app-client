@@ -67,6 +67,7 @@ export default function Tags(props) {
     )
 }
 
+// list of tags
 const foodTags = [
     'American',
     'Chinese',

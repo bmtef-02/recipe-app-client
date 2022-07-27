@@ -43,14 +43,14 @@ const Ingredient = (props) => {
     );
 };
 
-const AddButton = (props) => {
+const AddButton = (props) => {  // add button component
     const {
         ingredients,
         setReqBody,
         i,
     } = props
 
-    const addForm = (event) => {
+    const addForm = (event) => {    // function inserts new ingredient form
         event.preventDefault();
         const newArr = ingredients;
         newArr.splice(event.target.id, 0, '');
@@ -74,14 +74,14 @@ const AddButton = (props) => {
     );          
 };
 
-const RemoveButton = (props) => {
+const RemoveButton = (props) => {   // remove button component
     const {
         ingredients,
         setReqBody,
         i,
     } = props;
 
-    const removeForm = (event) => {
+    const removeForm = (event) => {     // function removes the ingredient form
         event.preventDefault();
         const newArr = ingredients;
         newArr.splice(event.target.id, 1);
@@ -93,7 +93,7 @@ const RemoveButton = (props) => {
         });
     };
 
-    if (ingredients.length > 1) {
+    if (ingredients.length > 1) {   // remove button does not render if only one form left
         return (
             <React.Fragment>
                 <Col xs='auto' className='d-none d-md-block'>

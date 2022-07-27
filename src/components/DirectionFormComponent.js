@@ -13,7 +13,7 @@ const styles = {
     }
 }
 
-const Direction = (props) => {
+const Direction = (props) => {  // direction form component
     const {
         direction,
         i,
@@ -43,14 +43,14 @@ const Direction = (props) => {
     );
 };
 
-const AddButton = (props) => {
+const AddButton = (props) => {  // insert button component
     const {
         directions,
         setReqBody,
         i,
     } = props
 
-    const addForm = (event) => {
+    const addForm = (event) => {    // function inserts new form
         event.preventDefault();
         const newArr = directions;
         newArr.splice(event.target.id, 0, '');
@@ -74,14 +74,14 @@ const AddButton = (props) => {
     );          
 };
 
-const RemoveButton = (props) => {
+const RemoveButton = (props) => {   // remove button component
     const {
         directions,
         setReqBody,
         i,
     } = props;
 
-    const removeForm = (event) => {
+    const removeForm = (event) => { // function removes the form
         event.preventDefault();
         const newArr = directions;
         newArr.splice(event.target.id, 1);
@@ -93,7 +93,7 @@ const RemoveButton = (props) => {
         });
     };
 
-    if (directions.length > 1) {
+    if (directions.length > 1) {    // remove button not render if only one form left
         return (
             <React.Fragment>
                 <Col xs='auto' className='d-none d-md-block'>
