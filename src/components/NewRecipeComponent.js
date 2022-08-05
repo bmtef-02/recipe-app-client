@@ -5,6 +5,7 @@ import NameForm from './NameFormComponent';
 import IngredientForm from './IngredientFormComponent';
 import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
+import Notes from './NotesComponents';
 
 export default function NewRecipe() {
     const [reqBody, setReqBody] = useState({
@@ -18,9 +19,9 @@ export default function NewRecipe() {
         name: '',
         ingredients: ['', '', ''],
         directions: ['', ''],
-        notes: ''
+        notes: '',
+        tags: ''
     });
-    const [tagError, setTagError] = useState(false);
     const [openModal, setModalOpen] = useState(false);
 
     const handleFieldChange = (event, value) => {
@@ -81,6 +82,18 @@ export default function NewRecipe() {
                 ...reqBody,
                 'tags': value
             })
+
+            if (!!errors.tags) {   // if there is tags error, remove it
+                setErrors({
+                    ...errors,
+                    tags: null
+                })
+            }
+        } else if (event.target.name === 'notes') {
+            setReqBody({
+                ...reqBody,
+                [event.target.name]: event.target.value
+            });
         }
     }
 
@@ -88,8 +101,8 @@ export default function NewRecipe() {
         event.preventDefault();
         const newErrors = findFormErrors();
 
-        // checks for error msg in name, ingredients, directions and sets errors
-        if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '')) {
+        // checks for error msg in name, ingredients, directions, tags and sets errors
+        if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '') || newErrors.tags) {
             setErrors(newErrors);
         } else {    // if no error msg
             alert("no errors");
@@ -125,6 +138,10 @@ export default function NewRecipe() {
         });
         newErrors.directions = directionsErrors;
 
+        if (reqBody.tags.length === 0) {    // if tags is blank, set error msg
+            newErrors.tags = 'tags cannot be blank';
+        }
+
         return newErrors;
     }
 
@@ -152,8 +169,11 @@ export default function NewRecipe() {
                     />
                     <Tags
                         handleFieldChange={handleFieldChange}
+                        errors={errors}
+                    />
+                    <Notes
+                        handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
-                        setReqBody={setReqBody}
                     />
                     <Row className="mb-5">
                         <Col xs="auto">

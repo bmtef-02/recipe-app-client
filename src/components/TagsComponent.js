@@ -3,6 +3,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const styles = {
     tags: {
@@ -19,8 +20,7 @@ export default function Tags(props) {
 
     const {
         handleFieldChange,
-        reqBody,
-        setReqBody,
+        errors,
     } = props; 
 
     return (
@@ -28,20 +28,6 @@ export default function Tags(props) {
             <Form.Group>
                 <Form.Label>tags</Form.Label>
                 <Col lg={8} md={9}>
-                    {/* <Autocomplete
-                        multiple
-                        id="tags-outlined"
-                        options={foodTags}
-                        getOptionLabel={(option) => option}
-                        filterSelectedOptions
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="select or search for tags"
-                                placeholder="tags"
-                            />
-                        )}
-                    /> */}
                     <Autocomplete
                         multiple
                         options={foodTags.map((option) => option)}
@@ -56,12 +42,17 @@ export default function Tags(props) {
                                 {...params}
                                 label='select, search, or create a tag'
                                 placeholder='tags'
-                                name='tags'                               
+                                name='tags'
+                                error={!!errors.tags}                             
                             />
                         )}
                         onChange={handleFieldChange}
                     />
+                    <FormHelperText error>{errors.tags}</FormHelperText>
                 </Col>
+                {/* <Form.Control.Feedback type='invalid' style={styles.feedback}>
+                     {errors.name}
+                </Form.Control.Feedback> */}
             </Form.Group>
         </Row>
     )
