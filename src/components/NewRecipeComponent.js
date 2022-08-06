@@ -105,7 +105,30 @@ export default function NewRecipe() {
         if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '') || newErrors.tags) {
             setErrors(newErrors);
         } else {    // if no error msg
-            alert("no errors");
+            console.log('about to POST new recipe')
+            let body = {
+                name: reqBody.name,
+                ingredients: reqBody.ingredients,
+                directions: reqBody.directions,
+                tags: reqBody.tags,
+                notes: reqBody.notes
+            };
+
+            async function postRecipe(url = '', data = {}) {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return response.json();
+            };
+
+            postRecipe('http://localhost:3000/recipes', body)
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
         }
     }
 
