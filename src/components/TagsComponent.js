@@ -4,6 +4,7 @@ import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
+import RecipePage from './RecipePageComponent';
 
 const styles = {
     tags: {
@@ -21,6 +22,7 @@ export default function Tags(props) {
     const {
         handleFieldChange,
         errors,
+        reqBody
     } = props; 
 
     return (
@@ -43,16 +45,14 @@ export default function Tags(props) {
                                 label='select, search, or create a tag'
                                 placeholder='tags'
                                 name='tags'
-                                error={!!errors.tags}                             
+                                error={!!errors.tags}
                             />
                         )}
                         onChange={handleFieldChange}
+                        value={reqBody.tags}
                     />
                     <FormHelperText error>{errors.tags}</FormHelperText>
                 </Col>
-                {/* <Form.Control.Feedback type='invalid' style={styles.feedback}>
-                     {errors.name}
-                </Form.Control.Feedback> */}
             </Form.Group>
         </Row>
     )

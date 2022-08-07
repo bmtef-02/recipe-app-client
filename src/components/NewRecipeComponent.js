@@ -6,6 +6,7 @@ import IngredientForm from './IngredientFormComponent';
 import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
 import Notes from './NotesComponents';
+import SucessModal from './SuccessModalComponent';
 
 export default function NewRecipe() {
     const [reqBody, setReqBody] = useState({
@@ -22,7 +23,8 @@ export default function NewRecipe() {
         notes: '',
         tags: ''
     });
-    const [openModal, setModalOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [id, setId] = useState('');
 
     const handleFieldChange = (event, value) => {
         if (event.target.name === 'name') {     // if change name form
@@ -105,7 +107,7 @@ export default function NewRecipe() {
         if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '') || newErrors.tags) {
             setErrors(newErrors);
         } else {    // if no error msg
-            console.log('about to POST new recipe')
+            
             let body = {
                 name: reqBody.name,
                 ingredients: reqBody.ingredients,
@@ -127,7 +129,11 @@ export default function NewRecipe() {
             };
 
             postRecipe('http://localhost:3000/recipes', body)
-            .then(response => console.log(response))
+            .then(response => {
+                setId(response._id);
+                setShowModal(true);
+                console.log(response);
+            })
             .catch(err => console.log(err))
         }
     }
@@ -193,6 +199,7 @@ export default function NewRecipe() {
                     <Tags
                         handleFieldChange={handleFieldChange}
                         errors={errors}
+                        reqBody={reqBody}
                     />
                     <Notes
                         handleFieldChange={handleFieldChange}
@@ -208,6 +215,12 @@ export default function NewRecipe() {
                     </Row>
                 </Form>
             </Container>
+            <SucessModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                reqBody={reqBody}
+                id={id}
+            />
             {JSON.stringify(reqBody)}
         </React.Fragment>
     )

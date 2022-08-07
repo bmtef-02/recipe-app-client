@@ -30,7 +30,7 @@ export default function NameForm(props) {
                         type='text'
                         placeholder='type recipe name here'
                         name='name'
-                        value={reqBody.name}
+                        defaultValue={reqBody.name}
                     />
                     <Form.Control.Feedback type='invalid' style={styles.feedback}>
                         {errors.name}
