@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 import Header from './HeaderComponent';
 import Name from './NameFormComponent';
 import IngredientForm from './IngredientFormComponent';
@@ -83,11 +85,9 @@ export default function RecipePage() {
         );
     } else {    // if recipe is undefined
         return (
-            <React.Fragment>
-                <h1>RECIPE UNDEFINED</h1>
-            </React.Fragment>
+            <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+            </Box>
         );
     }
-
-
 }

@@ -21,7 +21,7 @@ export default function SucessModal(props) {
     }
 
     return (
-        <Modal show={showModal} onHide={handleClose}>
+        <Modal show={showModal} onHide={handleClose} backdrop='static'>
             <Modal.Header>
                 <Modal.Title>Recipe Submitted!</Modal.Title>
             </Modal.Header>
