@@ -18,7 +18,15 @@ export default function FindRecipe() {
 
     useEffect(() => {   // gets all recipes
         axios.get('http://localhost:3000/recipes')
-        .then(resp => setAllRecipes(resp.data))
+        .then(resp => {
+            const arr = resp.data;
+            arr.sort(function(a, b) {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            setAllRecipes(arr)
+        })
         .catch(err => console.error(err))
     }, []);
 
