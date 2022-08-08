@@ -33,7 +33,7 @@ export default function RecipePage() {
             setIsLoading(false);
         })
         .catch(err => console.log(err));
-    }, []);
+    }, [recipeId]);
 
     const handleFieldChange = () => {
         console.log('trying to change field')

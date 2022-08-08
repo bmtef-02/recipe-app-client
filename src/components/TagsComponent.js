@@ -4,7 +4,6 @@ import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
-import RecipePage from './RecipePageComponent';
 
 const styles = {
     tags: {
