@@ -19,6 +19,7 @@ const Direction = (props) => {  // direction form component
         i,
         handleFieldChange,
         errors,
+        disabled,
     } = props;
 
     return (
@@ -34,6 +35,7 @@ const Direction = (props) => {  // direction form component
                     placeholder='type directions'
                     name='directions'
                     value={direction}
+                    disabled={disabled}
                 />
                 <Form.Control.Feedback type='invalid' style={styles.feedback}>
                     {errors.directions[i]}
@@ -48,6 +50,7 @@ const AddButton = (props) => {  // insert button component
         directions,
         setReqBody,
         i,
+        disabled
     } = props
 
     const addForm = (event) => {    // function inserts new form
@@ -65,10 +68,10 @@ const AddButton = (props) => {  // insert button component
     return (
         <React.Fragment>
             <Col xs='auto' className='d-none d-md-block'>
-                <Button variant='outline-secondary' name='direction' id={i} onClick={addForm}>+ new</Button>
+                <Button variant='outline-secondary' name='direction' id={i} onClick={addForm} disabled={disabled}>+ new</Button>
             </Col>  
             <Col xs='auto' className='d-md-none'>
-                <Button variant='outline-secondary' name='direction' id={i} onClick={addForm}>+</Button>
+                <Button variant='outline-secondary' name='direction' id={i} onClick={addForm} disabled={disabled}>+</Button>
             </Col>
         </React.Fragment>
     );          
@@ -79,6 +82,7 @@ const RemoveButton = (props) => {   // remove button component
         directions,
         setReqBody,
         i,
+        disabled
     } = props;
 
     const removeForm = (event) => { // function removes the form
@@ -97,10 +101,10 @@ const RemoveButton = (props) => {   // remove button component
         return (
             <React.Fragment>
                 <Col xs='auto' className='d-none d-md-block'>
-                    <Button variant='outline-secondary' name='direction' id={i} onClick={removeForm}>- remove</Button>
+                    <Button variant='outline-secondary' name='direction' id={i} onClick={removeForm} disabled={disabled}>- remove</Button>
                 </Col>  
                 <Col xs='auto' className='d-md-none'>
-                    <Button variant='outline-secondary' name='direction' id={i} onClick={removeForm}>-</Button>
+                    <Button variant='outline-secondary' name='direction' id={i} onClick={removeForm} disabled={disabled}>-</Button>
                 </Col>
             </React.Fragment>
         );
@@ -113,6 +117,7 @@ export default function DirectionForm(props) {
         reqBody,
         setReqBody,
         errors,
+        disabled,
     } = props;
 
     return (
@@ -126,18 +131,21 @@ export default function DirectionForm(props) {
                             i={i}
                             handleFieldChange={handleFieldChange}
                             errors={errors}
+                            disabled={disabled}
                         />
                         <AddButton 
                             directions={reqBody.directions}
                             setReqBody={setReqBody}
                             i={i}
                             key={`add ${direction}`}
+                            disabled={disabled}
                         />
                         <RemoveButton 
                             directions={reqBody.directions}
                             setReqBody={setReqBody}
                             i={i}
                             key={`remove ${direction}`}
+                            disabled={disabled}
                         />
                     </Row>
                 </Form.Group>
@@ -146,6 +154,7 @@ export default function DirectionForm(props) {
                 directions={reqBody.directions}
                 setReqBody={setReqBody}
                 i={reqBody.directions.length}
+                disabled={disabled}
             />
         </Row>
     );

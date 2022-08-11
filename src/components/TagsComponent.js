@@ -21,7 +21,8 @@ export default function Tags(props) {
     const {
         handleFieldChange,
         errors,
-        reqBody
+        reqBody,
+        disabled,
     } = props; 
 
     return (
@@ -49,6 +50,7 @@ export default function Tags(props) {
                         )}
                         onChange={handleFieldChange}
                         value={reqBody.tags}
+                        disabled={disabled}
                     />
                     <FormHelperText error>{errors.tags}</FormHelperText>
                 </Col>

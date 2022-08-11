@@ -18,6 +18,7 @@ export default function NameForm(props) {
         handleFieldChange,
         reqBody,
         errors,
+        disabled,
     } = props;
     return (
         <Row style={styles.name}>
@@ -30,7 +31,8 @@ export default function NameForm(props) {
                         type='text'
                         placeholder='type recipe name here'
                         name='name'
-                        defaultValue={reqBody.name}
+                        value={reqBody.name}
+                        disabled={disabled}
                     />
                     <Form.Control.Feedback type='invalid' style={styles.feedback}>
                         {errors.name}

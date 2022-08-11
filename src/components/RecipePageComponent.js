@@ -7,11 +7,13 @@ import Form from 'react-bootstrap/Form';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import Header from './HeaderComponent';
-import Name from './NameFormComponent';
+import NameForm from './NameFormComponent';
 import IngredientForm from './IngredientFormComponent';
 import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
 import Notes from './NotesComponents';
+import SucessModal from './SuccessModalComponent';
+import UpdateModal from './UpdateModalComponent';
 
 export default function RecipePage() {
 
@@ -25,6 +27,8 @@ export default function RecipePage() {
         notes: '',
         tags: ''
     });
+    const [disabled, setDisabled] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/recipes/${recipeId}`)
@@ -35,8 +39,151 @@ export default function RecipePage() {
         .catch(err => console.log(err));
     }, [recipeId]);
 
-    const handleFieldChange = () => {
-        console.log('trying to change field')
+    const handleFieldChange = (event, value) => {
+        if (event.target.name === 'name') {     // if change name form
+            setRecipe({
+                ...recipe,
+                [event.target.name]: event.target.value
+            });
+            
+            if (!!errors.name) {    // if there is name error, remove it
+                setErrors({
+                    ...errors,
+                    name: null
+                })
+            };
+        } else if (event.target.name === 'ingredients') {   // if change ingredient form
+            const newIngredients = [...recipe.ingredients];
+            newIngredients[event.target.id] = event.target.value;
+            setRecipe(prevState => {
+                return {
+                    ...prevState,
+                    ingredients: newIngredients
+                }
+            });
+
+            if (!!errors.ingredients[event.target.id]) {    // if there is ingredient error, remove it
+                const newIngredientErrors = [...errors.ingredients];
+                newIngredientErrors[event.target.id] = '';
+                setErrors(prevState => {
+                    return {
+                        ...prevState,
+                        ingredients: newIngredientErrors
+                    }
+                });
+            }
+        } else if (event.target.name === 'directions') {    // if change direction form
+            const newDirections = [...recipe.directions];
+            newDirections[event.target.id] = event.target.value;
+            setRecipe(prevState => {
+                return {
+                    ...prevState,
+                    directions: newDirections
+                }
+            });
+
+            if (!!errors.directions[event.target.id]) {     // if there is direction error, remove it
+                const newDirectionErrors = [...errors.directions];
+                newDirectionErrors[event.target.id] = '';
+                setErrors(prevState => {
+                    return {
+                        ...prevState,
+                        directions: newDirectionErrors
+                    }
+                });
+            }
+        } else if (Array.isArray(value)) {  // if change tag form
+            setRecipe({
+                ...recipe,
+                'tags': value
+            })
+
+            if (!!errors.tags) {   // if there is tags error, remove it
+                setErrors({
+                    ...errors,
+                    tags: null
+                })
+            }
+        } else if (event.target.name === 'notes') {
+            setRecipe({
+                ...recipe,
+                [event.target.name]: event.target.value
+            });
+        }
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const newErrors = findFormErrors();
+
+        // checks for error msg in name, ingredients, directions, tags and sets errors
+        if (newErrors.name || !newErrors.ingredients.every(i => i === '') || !newErrors.directions.every(i => i === '') || newErrors.tags) {
+            setErrors(newErrors);
+        } else {    // if no error msg
+            
+            let body = {
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                directions: recipe.directions,
+                tags: recipe.tags,
+                notes: recipe.notes
+            };
+
+            async function putRecipe(url = '', data = {}) {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return response.json();
+            };
+
+            putRecipe(`http://localhost:3000/recipes/${recipeId}`, body)
+            .then(response => {
+                setShowModal(true);
+                console.log(response);
+            })
+            .catch(err => console.log(err))
+        }
+    }
+
+    const findFormErrors = () => {
+        const newErrors = {};
+        const ingredientsErrors = [];
+        const directionsErrors = [];
+
+        if (!recipe.name) {    // if name is blank, set error msg
+            newErrors.name = 'recipe name cannot be blank';
+        } else if (recipe.name.length > 30) {  // if name is longer than 30 set error msg
+            newErrors.name = 'recipe name must be less than 30 characters';
+        };
+
+        recipe.ingredients.forEach((ingredient, i) => {
+            if (ingredient === '' || !ingredient) {     // if ingredient is blank or null, set error msg
+                ingredientsErrors.push('ingredient cannot be blank');
+            } else {    // if ingredient is filled, no error msg
+                ingredientsErrors.push('');
+            }
+        });
+        newErrors.ingredients = ingredientsErrors;
+
+        recipe.directions.forEach((direction) => {
+            if (direction === '' || !direction) {   // if direction is blank or null, set error msg
+                directionsErrors.push('direction cannot be blank');
+            } else {    // if direction is filled, no error msg
+                directionsErrors.push('');
+            }
+        });
+        newErrors.directions = directionsErrors;
+
+        if (recipe.tags.length === 0) {    // if tags is blank, set error msg
+            newErrors.tags = 'tags cannot be blank';
+        }
+
+        return newErrors;
     }
 
     if (!isLoading) {   // if recipe is defined
@@ -44,43 +191,64 @@ export default function RecipePage() {
             <React.Fragment>
                 <Header />
                 <Container className="mt-3">
-                    <Form>
-                        <Name
-                            handleFieldchange={handleFieldChange}
+                    <Form onSubmit={handleSubmit}>
+                        <NameForm
+                            handleFieldChange={handleFieldChange}
                             reqBody={recipe}
                             errors={errors}
+                            disabled={disabled}
                         />
                         <IngredientForm
                             handleFieldChange={handleFieldChange}
                             reqBody={recipe}
-                            setReqBody={handleFieldChange}
+                            setReqBody={setRecipe}
                             errors={errors}
+                            disabled={disabled}
                         />
                         <DirectionForm
                             handleFieldChange={handleFieldChange}
                             reqBody={recipe}
-                            setReqBody={handleFieldChange}
+                            setReqBody={setRecipe}
                             errors={errors}
+                            disabled={disabled}
                         />
                         <Tags
                             handleFieldChange={handleFieldChange}
                             errors={errors}
                             reqBody={recipe}
+                            disabled={disabled}
                         />
                         <Notes
                             handleFieldChange={handleFieldChange}
                             reqBody={recipe}
+                            disabled={disabled}
                         />
                         <Row className="mb-5">
                             <Col xs="auto">
-                                <Button type="submit" variant="outline-dark" size="lg">save me!</Button>
+                                <Button type="submit" variant="outline-dark" size="lg" disabled={disabled}>save me!</Button>
                             </Col>
                             <Col xs="auto">
-                                <Button href="/" variant="outline-dark" size="lg">cancel</Button>
+                                <Button href={`/recipes/${recipeId}`} variant="outline-dark" size="lg" hidden={disabled}>cancel</Button>
+                            </Col>
+                            <Col xs='auto'>
+                                <Button variant='outline-dark' size='lg' hidden={!disabled} onClick={() => setDisabled(false)}>edit recipe</Button>
                             </Col>
                         </Row>
                     </Form>
                 </Container>
+                {/* <SucessModal
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    reqBody={recipe}
+                    id={id}
+                /> */}
+                <UpdateModal
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    recipe={recipe}
+                    setDisabled={setDisabled}
+                />
+                {JSON.stringify(recipe)}
             </React.Fragment>
         );
     } else {    // if recipe is undefined

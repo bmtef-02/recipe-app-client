@@ -19,6 +19,7 @@ const Ingredient = (props) => {
         i,
         handleFieldChange,
         errors,
+        disabled,
     } = props;
 
     return (
@@ -34,6 +35,7 @@ const Ingredient = (props) => {
                     placeholder='type ingredient amount and name'
                     name='ingredients'
                     value={ingredient}
+                    disabled={disabled}
                 />
                 <Form.Control.Feedback type='invalid' style={styles.feedback}>
                     {errors.ingredients[i]}
@@ -48,6 +50,7 @@ const AddButton = (props) => {  // add button component
         ingredients,
         setReqBody,
         i,
+        disabled
     } = props
 
     const addForm = (event) => {    // function inserts new ingredient form
@@ -65,10 +68,10 @@ const AddButton = (props) => {  // add button component
     return (
         <React.Fragment>
             <Col xs='auto' className='d-none d-md-block'>
-                <Button variant='outline-secondary' name='ingredient' id={i} onClick={addForm}>+ new</Button>
+                <Button variant='outline-secondary' name='ingredient' id={i} onClick={addForm} disabled={disabled}>+ new</Button>
             </Col>  
             <Col xs='auto' className='d-md-none'>
-                <Button variant='outline-secondary' name='ingredient' id={i} onClick={addForm}>+</Button>
+                <Button variant='outline-secondary' name='ingredient' id={i} onClick={addForm} disabled={disabled}>+</Button>
             </Col>
         </React.Fragment>
     );          
@@ -79,6 +82,7 @@ const RemoveButton = (props) => {   // remove button component
         ingredients,
         setReqBody,
         i,
+        disabled
     } = props;
 
     const removeForm = (event) => {     // function removes the ingredient form
@@ -97,10 +101,10 @@ const RemoveButton = (props) => {   // remove button component
         return (
             <React.Fragment>
                 <Col xs='auto' className='d-none d-md-block'>
-                    <Button variant='outline-secondary' name='ingredient' id={i} onClick={removeForm}>- remove</Button>
+                    <Button variant='outline-secondary' name='ingredient' id={i} onClick={removeForm} disabled={disabled}>- remove</Button>
                 </Col>  
                 <Col xs='auto' className='d-md-none'>
-                    <Button variant='outline-secondary' name='ingredient' id={i} onClick={removeForm}>-</Button>
+                    <Button variant='outline-secondary' name='ingredient' id={i} onClick={removeForm} disabled={disabled}>-</Button>
                 </Col>
             </React.Fragment>
         );
@@ -113,6 +117,7 @@ export default function IngredientForm(props) {
         reqBody,
         setReqBody,
         errors,
+        disabled,
     } = props;
 
     return (
@@ -126,18 +131,21 @@ export default function IngredientForm(props) {
                             i={i}
                             handleFieldChange={handleFieldChange}
                             errors={errors}
+                            disabled={disabled}
                         />
                         <AddButton 
                             ingredients={reqBody.ingredients}
                             setReqBody={setReqBody}
                             i={i}
                             key={`add ${ingredient}`}
+                            disabled={disabled}
                         />
                         <RemoveButton 
                             ingredients={reqBody.ingredients}
                             setReqBody={setReqBody}
                             i={i}
                             key={`remove ${ingredient}`}
+                            disabled={disabled}
                         />
                     </Row>
                 </Form.Group>
@@ -146,6 +154,7 @@ export default function IngredientForm(props) {
                 ingredients={reqBody.ingredients}
                 setReqBody={setReqBody}
                 i={reqBody.ingredients.length}
+                disabled={disabled}
             />
         </Row>
     );

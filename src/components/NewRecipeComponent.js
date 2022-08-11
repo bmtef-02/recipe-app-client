@@ -183,34 +183,39 @@ export default function NewRecipe() {
                         handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
                         errors={errors}
+                        disabled={false}
                     />
                     <IngredientForm
                         handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
                         setReqBody={setReqBody}
                         errors={errors}
+                        disabled={false}
                     />
                     <DirectionForm
                         handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
                         setReqBody={setReqBody}
                         errors={errors}
+                        disabled={false}
                     />
                     <Tags
                         handleFieldChange={handleFieldChange}
                         errors={errors}
                         reqBody={reqBody}
+                        disabled={false}
                     />
                     <Notes
                         handleFieldChange={handleFieldChange}
                         reqBody={reqBody}
+                        disabled={false}
                     />
                     <Row className="mb-5">
                         <Col xs="auto">
                             <Button type="submit" variant="outline-dark" size="lg">save me!</Button>
                         </Col>
                         <Col xs="auto">
-                            <Button href="/" variant="outline-dark" size="lg">cancel</Button>
+                            <Button href="/new" variant="outline-dark" size="lg">clear all</Button>
                         </Col>
                     </Row>
                 </Form>

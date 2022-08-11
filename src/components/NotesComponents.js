@@ -12,7 +12,8 @@ export default function Notes(props) {
 
     const {
         handleFieldChange,
-        reqBody
+        reqBody,
+        disabled
     } = props;
 
     return (
@@ -27,6 +28,7 @@ export default function Notes(props) {
                         onChange={handleFieldChange}
                         placeholder='write optional notes here'
                         value={reqBody.notes}
+                        disabled={disabled}
                     />
                 </Col>
             </Form.Group>
