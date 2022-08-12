@@ -50,7 +50,9 @@ const AddButton = (props) => {  // insert button component
         directions,
         setReqBody,
         i,
-        disabled
+        disabled,
+        count,
+        setCount,
     } = props
 
     const addForm = (event) => {    // function inserts new form
@@ -58,6 +60,7 @@ const AddButton = (props) => {  // insert button component
         const newArr = directions;
         newArr.splice(event.target.id, 0, '');
         setReqBody(prevState => {
+            setCount(count + 1);
             return {
                 ...prevState,
                 directions: newArr
@@ -82,7 +85,9 @@ const RemoveButton = (props) => {   // remove button component
         directions,
         setReqBody,
         i,
-        disabled
+        disabled,
+        count,
+        setCount,
     } = props;
 
     const removeForm = (event) => { // function removes the form
@@ -90,6 +95,7 @@ const RemoveButton = (props) => {   // remove button component
         const newArr = directions;
         newArr.splice(event.target.id, 1);
         setReqBody(prevState => {
+            setCount(count + 1);
             return {
                 ...prevState,
                 directions: newArr
@@ -118,6 +124,8 @@ export default function DirectionForm(props) {
         setReqBody,
         errors,
         disabled,
+        count,
+        setCount,
     } = props;
 
     return (
@@ -139,6 +147,8 @@ export default function DirectionForm(props) {
                             i={i}
                             key={`add ${direction}`}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                         <RemoveButton 
                             directions={reqBody.directions}
@@ -146,6 +156,8 @@ export default function DirectionForm(props) {
                             i={i}
                             key={`remove ${direction}`}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                     </Row>
                 </Form.Group>
@@ -155,6 +167,8 @@ export default function DirectionForm(props) {
                 setReqBody={setReqBody}
                 i={reqBody.directions.length}
                 disabled={disabled}
+                count={count}
+                setCount={setCount}
             />
         </Row>
     );

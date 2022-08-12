@@ -12,7 +12,6 @@ import IngredientForm from './IngredientFormComponent';
 import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
 import Notes from './NotesComponents';
-import SucessModal from './SuccessModalComponent';
 import UpdateModal from './UpdateModalComponent';
 
 export default function RecipePage() {
@@ -29,6 +28,7 @@ export default function RecipePage() {
     });
     const [disabled, setDisabled] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/recipes/${recipeId}`)
@@ -40,6 +40,8 @@ export default function RecipePage() {
     }, [recipeId]);
 
     const handleFieldChange = (event, value) => {
+
+        setCount(count + 1);
         if (event.target.name === 'name') {     // if change name form
             setRecipe({
                 ...recipe,
@@ -143,6 +145,7 @@ export default function RecipePage() {
 
             putRecipe(`http://localhost:3000/recipes/${recipeId}`, body)
             .then(response => {
+                setCount(0);
                 setShowModal(true);
                 console.log(response);
             })
@@ -204,6 +207,8 @@ export default function RecipePage() {
                             setReqBody={setRecipe}
                             errors={errors}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                         <DirectionForm
                             handleFieldChange={handleFieldChange}
@@ -211,6 +216,8 @@ export default function RecipePage() {
                             setReqBody={setRecipe}
                             errors={errors}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                         <Tags
                             handleFieldChange={handleFieldChange}
@@ -225,7 +232,7 @@ export default function RecipePage() {
                         />
                         <Row className="mb-5">
                             <Col xs="auto">
-                                <Button type="submit" variant="outline-dark" size="lg" disabled={disabled}>save me!</Button>
+                            <Button type="submit" variant="outline-dark" size="lg" disabled={count === 0}>save me!</Button>
                             </Col>
                             <Col xs="auto">
                                 <Button href={`/recipes/${recipeId}`} variant="outline-dark" size="lg" hidden={disabled}>cancel</Button>
@@ -236,12 +243,6 @@ export default function RecipePage() {
                         </Row>
                     </Form>
                 </Container>
-                {/* <SucessModal
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    reqBody={recipe}
-                    id={id}
-                /> */}
                 <UpdateModal
                     showModal={showModal}
                     setShowModal={setShowModal}

@@ -50,7 +50,9 @@ const AddButton = (props) => {  // add button component
         ingredients,
         setReqBody,
         i,
-        disabled
+        disabled,
+        count,
+        setCount
     } = props
 
     const addForm = (event) => {    // function inserts new ingredient form
@@ -58,6 +60,7 @@ const AddButton = (props) => {  // add button component
         const newArr = ingredients;
         newArr.splice(event.target.id, 0, '');
         setReqBody(prevState => {
+            setCount(count + 1);
             return {
                 ...prevState,
                 ingredients: newArr
@@ -82,7 +85,9 @@ const RemoveButton = (props) => {   // remove button component
         ingredients,
         setReqBody,
         i,
-        disabled
+        disabled,
+        count,
+        setCount,
     } = props;
 
     const removeForm = (event) => {     // function removes the ingredient form
@@ -90,6 +95,7 @@ const RemoveButton = (props) => {   // remove button component
         const newArr = ingredients;
         newArr.splice(event.target.id, 1);
         setReqBody(prevState => {
+            setCount(count + 1);
             return {
                 ...prevState,
                 ingredients: newArr
@@ -118,6 +124,8 @@ export default function IngredientForm(props) {
         setReqBody,
         errors,
         disabled,
+        count,
+        setCount,
     } = props;
 
     return (
@@ -139,6 +147,8 @@ export default function IngredientForm(props) {
                             i={i}
                             key={`add ${ingredient}`}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                         <RemoveButton 
                             ingredients={reqBody.ingredients}
@@ -146,6 +156,8 @@ export default function IngredientForm(props) {
                             i={i}
                             key={`remove ${ingredient}`}
                             disabled={disabled}
+                            count={count}
+                            setCount={setCount}
                         />
                     </Row>
                 </Form.Group>
@@ -155,6 +167,8 @@ export default function IngredientForm(props) {
                 setReqBody={setReqBody}
                 i={reqBody.ingredients.length}
                 disabled={disabled}
+                count={count}
+                setCount={setCount}
             />
         </Row>
     );
