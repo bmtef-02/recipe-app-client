@@ -25,6 +25,7 @@ export default function NewRecipe() {
     });
     const [showModal, setShowModal] = useState(false);
     const [id, setId] = useState('');
+    const [count, setCount] = useState(0);
 
     const handleFieldChange = (event, value) => {
         if (event.target.name === 'name') {     // if change name form
@@ -191,6 +192,8 @@ export default function NewRecipe() {
                         setReqBody={setReqBody}
                         errors={errors}
                         disabled={false}
+                        count={count}
+                        setCount={setCount}
                     />
                     <DirectionForm
                         handleFieldChange={handleFieldChange}
@@ -198,6 +201,8 @@ export default function NewRecipe() {
                         setReqBody={setReqBody}
                         errors={errors}
                         disabled={false}
+                        count={count}
+                        setCount={setCount}
                     />
                     <Tags
                         handleFieldChange={handleFieldChange}

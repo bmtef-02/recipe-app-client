@@ -33,6 +33,7 @@ export default function RecipePage() {
     useEffect(() => {
         axios.get(`http://localhost:3000/recipes/${recipeId}`)
         .then(obj => {
+            console.log(obj.data);
             setRecipe(obj.data);
             setIsLoading(false);
         })
