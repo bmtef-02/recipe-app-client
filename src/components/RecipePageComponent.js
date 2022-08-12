@@ -13,6 +13,7 @@ import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
 import Notes from './NotesComponents';
 import UpdateModal from './UpdateModalComponent';
+import DeleteModal from './DeleteModalComponent';
 
 export default function RecipePage() {
 
@@ -29,11 +30,11 @@ export default function RecipePage() {
     const [disabled, setDisabled] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [count, setCount] = useState(0);
+    const [confirm, setConfirm] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/recipes/${recipeId}`)
         .then(obj => {
-            console.log(obj.data);
             setRecipe(obj.data);
             setIsLoading(false);
         })
@@ -146,9 +147,9 @@ export default function RecipePage() {
 
             putRecipe(`http://localhost:3000/recipes/${recipeId}`, body)
             .then(response => {
+                console.log(response);
                 setCount(0);
                 setShowModal(true);
-                console.log(response);
             })
             .catch(err => console.log(err))
         }
@@ -188,6 +189,27 @@ export default function RecipePage() {
         }
 
         return newErrors;
+    }
+
+    const handleDelete = () => {
+        console.log('delete')
+        async function deleteRecipe(url = '') {
+            const response = await fetch(url, {
+                method: 'DELETE',
+                header: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return response.json();
+        }
+
+        // deleteRecipe(`http://localhost:3000/recipes/${recipeId}`)
+        // .then(response => {
+        //     console.log(response);
+        //     setShowModal(true);
+        // })
+        // .catch(err => console.log(err))
     }
 
     if (!isLoading) {   // if recipe is defined
@@ -239,6 +261,9 @@ export default function RecipePage() {
                                 <Button href={`/recipes/${recipeId}`} variant="outline-dark" size="lg" hidden={disabled}>cancel</Button>
                             </Col>
                             <Col xs='auto'>
+                                <Button variant='outline-dark' size='lg' hidden={disabled} onClick={() => setConfirm(true)}>delete recipe</Button>
+                            </Col>
+                            <Col xs='auto'>
                                 <Button variant='outline-dark' size='lg' hidden={!disabled} onClick={() => setDisabled(false)}>edit recipe</Button>
                             </Col>
                         </Row>
@@ -249,6 +274,12 @@ export default function RecipePage() {
                     setShowModal={setShowModal}
                     recipe={recipe}
                     setDisabled={setDisabled}
+                />
+                <DeleteModal
+                    confirm={confirm}
+                    setConfirm={setConfirm}
+                    recipe={recipe}
+                    handleDelete={handleDelete}
                 />
                 {JSON.stringify(recipe)}
             </React.Fragment>
