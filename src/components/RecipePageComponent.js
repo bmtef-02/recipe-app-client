@@ -204,12 +204,11 @@ export default function RecipePage() {
             return response.json();
         }
 
-        // deleteRecipe(`http://localhost:3000/recipes/${recipeId}`)
-        // .then(response => {
-        //     console.log(response);
-        //     setShowModal(true);
-        // })
-        // .catch(err => console.log(err))
+        deleteRecipe(`http://localhost:3000/recipes/${recipeId}`)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => console.log(err))
     }
 
     if (!isLoading) {   // if recipe is defined
