@@ -232,7 +232,6 @@ export default function NewRecipe() {
                 reqBody={reqBody}
                 id={id}
             />
-            {JSON.stringify(reqBody)}
         </React.Fragment>
     )
 }

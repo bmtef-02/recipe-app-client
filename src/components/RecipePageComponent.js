@@ -280,7 +280,6 @@ export default function RecipePage() {
                     recipe={recipe}
                     handleDelete={handleDelete}
                 />
-                {JSON.stringify(recipe)}
             </React.Fragment>
         );
     } else {    // if recipe is undefined
