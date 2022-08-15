@@ -15,10 +15,11 @@ export default function FindRecipe() {
     const [searchParam] = useState(['name', 'ingredients']);
     const [selectedTag, setSelectedTag] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
-    const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/";
+    const herokuUrl = 'https://blooming-fortress-14400.herokuapp.com/';
+    const localHostUrl = 'http://localhost:3000/recipes';
 
     useEffect(() => {   // gets all recipes
-        axios.get(herokuUrl)
+        axios.get(localHostUrl)
         .then(resp => {
             const arr = resp.data;
             arr.sort(function(a, b) {

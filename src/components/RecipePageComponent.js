@@ -32,6 +32,7 @@ export default function RecipePage() {
     const [count, setCount] = useState(0);
     const [confirm, setConfirm] = useState(false);
     const herokuUrl = `https://blooming-fortress-14400.herokuapp.com/${recipeId}`;
+    const localHostUrl = `http://localhost:3000/recipes/${recipeId}`;
 
     useEffect(() => {
         axios.get(herokuUrl)
@@ -146,7 +147,7 @@ export default function RecipePage() {
                 return response.json();
             };
 
-            putRecipe(herokuUrl, body)
+            putRecipe(localHostUrl, body)
             .then(response => {
                 console.log(response);
                 setCount(0);
@@ -205,7 +206,7 @@ export default function RecipePage() {
             return response.json();
         }
 
-        deleteRecipe(herokuUrl)
+        deleteRecipe(localHostUrl)
         .then(response => {
             console.log(response);
         })
