@@ -29,6 +29,7 @@ export default function Tags(props) {
         <Row style={styles.tags}>
             <Form.Group>
                 <Form.Label>tags</Form.Label>
+                <Form.Text style={{ display: 'block', fontSize: '16px', marginTop: 0, marginBottom: '10px' }}>to create your own tag, type the tag name and click 'enter' on your keyboard</Form.Text>
                 <Col lg={8} md={9}>
                     <Autocomplete
                         multiple
