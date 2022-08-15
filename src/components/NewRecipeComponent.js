@@ -27,7 +27,6 @@ export default function NewRecipe() {
     const [id, setId] = useState('');
     const [count, setCount] = useState(0);
     const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/recipes";
-    const localHostUrl = 'http://localhost:3000/recipes';
 
     const handleFieldChange = (event, value) => {
         if (event.target.name === 'name') {     // if change name form

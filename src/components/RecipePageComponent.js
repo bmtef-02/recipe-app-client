@@ -32,7 +32,6 @@ export default function RecipePage() {
     const [count, setCount] = useState(0);
     const [confirm, setConfirm] = useState(false);
     const herokuUrl = `https://blooming-fortress-14400.herokuapp.com/recipes/${recipeId}`;
-    const localHostUrl = `http://localhost:3000/recipes/${recipeId}`;
 
     useEffect(() => {
         axios.get(herokuUrl)
@@ -194,7 +193,6 @@ export default function RecipePage() {
     }
 
     const handleDelete = () => {
-        console.log('delete')
         async function deleteRecipe(url = '') {
             const response = await fetch(url, {
                 method: 'DELETE',

@@ -16,7 +16,6 @@ export default function FindRecipe() {
     const [selectedTag, setSelectedTag] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
     const herokuUrl = 'https://blooming-fortress-14400.herokuapp.com/recipes';
-    const localHostUrl = 'http://localhost:3000/recipes';
 
     useEffect(() => {   // gets all recipes
         axios.get(herokuUrl)
