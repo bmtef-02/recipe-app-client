@@ -40,7 +40,7 @@ export default function RecipePage() {
             setIsLoading(false);
         })
         .catch(err => console.log(err));
-    }, [recipeId]);
+    }, [herokuUrl]);
 
     const handleFieldChange = (event, value) => {
 
