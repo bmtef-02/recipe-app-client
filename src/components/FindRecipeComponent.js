@@ -45,33 +45,6 @@ export default function FindRecipe() {
     }, [allRecipes]);
 
     const filterRecipes = allRecipes.filter(recipe => {  // filters through each recipe if name, ingredients, or tags match search terms
-        // if (selectedTag === 'all' ) {    // if the recipe tags includes the selected tag
-        //     console.log(`all tags selected`)
-        //     return searchParam.some((param) => {    // checks if recipe's name or ingredients contains the search term
-        //         if (typeof recipe[param] === 'string') {
-        //             return (
-        //                 recipe[param].toString().toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-        //             );
-        //         } else {
-        //             return (
-        //                 recipe[param].join('').toString().toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-        //             )
-        //         }
-        //     });
-        // } else {    // if user did not select tag
-        //     console.log(`tag was selected`)
-        //     return searchParam.some((param) => {     // checks if recipe's name or ingredients contains the search term
-        //         if (typeof recipe[param] === 'string') {    // if param is name
-        //             return (    // returns true if recipe name includes the search term
-        //                 recipe[param].toString().toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-        //             );
-        //         } else {    // if param is ingredients
-        //             return (    // returns true if recipe ingredients includes the search term
-        //                 recipe[param].join().toString().toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-        //             )
-        //         }
-        //     });
-        // }
         if (recipe.tags.includes(selectedTag)) {    // if the recipe tags includes the selected tag
             console.log(`if block: tag was selected`)
             return searchParam.some((param) => {     // checks if recipe's name or ingredients contains the search term
