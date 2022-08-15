@@ -26,6 +26,7 @@ export default function NewRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [id, setId] = useState('');
     const [count, setCount] = useState(0);
+    const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/";
 
     const handleFieldChange = (event, value) => {
         if (event.target.name === 'name') {     // if change name form
@@ -129,7 +130,7 @@ export default function NewRecipe() {
                 return response.json();
             };
 
-            postRecipe('http://localhost:3000/recipes', body)
+            postRecipe(herokuUrl, body)
             .then(response => {
                 setId(response._id);
                 setShowModal(true);
