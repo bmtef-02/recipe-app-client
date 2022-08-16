@@ -7,6 +7,7 @@ import DirectionForm from './DirectionFormComponent';
 import Tags from './TagsComponent';
 import Notes from './NotesComponents';
 import SucessModal from './SuccessModalComponent';
+import MaintenanceModal from './MaintenanceModalComponent';
 
 export default function NewRecipe() {
     const [reqBody, setReqBody] = useState({
@@ -26,6 +27,7 @@ export default function NewRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [id, setId] = useState('');
     const [count, setCount] = useState(0);
+    const [maintenance, setMaintenance] = useState(false);
     const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/recipes";
 
     const handleFieldChange = (event, value) => {
@@ -136,7 +138,11 @@ export default function NewRecipe() {
                 setShowModal(true);
                 console.log(response);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setMaintenance(true);
+                console.log('cannot post new recipe')
+                console.log(err)
+            })
         }
     }
 
@@ -231,6 +237,11 @@ export default function NewRecipe() {
                 setShowModal={setShowModal}
                 reqBody={reqBody}
                 id={id}
+            />
+            <MaintenanceModal
+                maintenance={maintenance}
+                setMaintenance={setMaintenance}
+                homepage={false}
             />
         </React.Fragment>
     )

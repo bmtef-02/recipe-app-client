@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
+import MaintenanceModal from "./MaintenanceModalComponent";
 
 const StyledContainer = styled(Container)`
     .title-row {
@@ -16,6 +18,21 @@ const StyledContainer = styled(Container)`
 `;
 
 export default function Homepage() {
+
+    const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/recipes/";
+    const [maintenance, setMaintenance] = useState(false);
+
+    useEffect(() => {
+        axios.get(herokuUrl)
+        .then(obj => {
+            setMaintenance(false);
+        })
+        .catch(err => {
+            setMaintenance(true);
+            console.log(err);
+        });
+    }, [herokuUrl]);
+
     return (
         <StyledContainer>
             <Row className="title-row">
@@ -29,6 +46,11 @@ export default function Homepage() {
                     <Button variant="outline-dark" size="lg" href="/find">Search for recipe</Button>
                 </Col>
             </Row>
+            <MaintenanceModal
+                maintenance={maintenance}
+                setMaintenance={setMaintenance}
+                homepage={true}
+            />
         </StyledContainer>
     );
 };
