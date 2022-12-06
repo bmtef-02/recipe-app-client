@@ -31,16 +31,16 @@ export default function RecipePage() {
     const [showModal, setShowModal] = useState(false);
     const [count, setCount] = useState(0);
     const [confirm, setConfirm] = useState(false);
-    const herokuUrl = `https://blooming-fortress-14400.herokuapp.com/recipes/${recipeId}`;
+    const url = `https://bmtef02-recipe-app.onrender.com/recipes/${recipeId}`;
 
     useEffect(() => {
-        axios.get(herokuUrl)
+        axios.get(url)
         .then(obj => {
             setRecipe(obj.data);
             setIsLoading(false);
         })
         .catch(err => console.log(err));
-    }, [herokuUrl]);
+    }, [url]);
 
     const handleFieldChange = (event, value) => {
 
@@ -146,7 +146,7 @@ export default function RecipePage() {
                 return response.json();
             };
 
-            putRecipe(herokuUrl, body)
+            putRecipe(url, body)
             .then(response => {
                 console.log(response);
                 setCount(0);
@@ -204,7 +204,7 @@ export default function RecipePage() {
             return response.json();
         }
 
-        deleteRecipe(herokuUrl)
+        deleteRecipe(url)
         .then(response => {
             console.log(response);
         })

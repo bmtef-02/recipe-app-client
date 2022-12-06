@@ -19,11 +19,11 @@ const StyledContainer = styled(Container)`
 
 export default function Homepage() {
 
-    const herokuUrl = "https://blooming-fortress-14400.herokuapp.com/recipes/";
+    const url = "https://bmtef02-recipe-app.onrender.com/recipes/";
     const [maintenance, setMaintenance] = useState(false);
 
     useEffect(() => {
-        axios.get(herokuUrl)
+        axios.get(url)
         .then(obj => {
             setMaintenance(false);
         })
@@ -31,7 +31,7 @@ export default function Homepage() {
             setMaintenance(true);
             console.log(err);
         });
-    }, [herokuUrl]);
+    }, [url]);
 
     return (
         <StyledContainer>
